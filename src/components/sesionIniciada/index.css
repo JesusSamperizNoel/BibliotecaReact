@@ -1,0 +1,16 @@
+#libreria{
+    margin: 2vh 4vw;
+}
+
+#disponibles{
+    border: .8vw;
+    border-style: solid;
+    padding: 2vw;
+    margin-bottom: 5vh;
+}
+
+#adquiridos{
+    border: .8vw;
+    border-style: solid;
+    padding: 2vw;
+}
