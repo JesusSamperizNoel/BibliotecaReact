@@ -27,6 +27,8 @@ export default function IniciarSesion({sesIni, setSesIni}) {
         .then(user => {
             if(user[0] && user[0].password === passValue){//comprueba si existe el usuario y coincide su contraseña
                 alert("Sesion Iniciada")
+                localStorage.removeItem('sesUser')
+                localStorage.setItem('sesUser', JSON.stringify(user))
                 setSesIni(true)
             } else {
                 setSesIni(false)
@@ -46,12 +48,12 @@ export default function IniciarSesion({sesIni, setSesIni}) {
     return(
         <>
             <div id='iniciarSesion'>
-                <label htmlFor="input">Iniciar Sesion</label>
+                <label htmlFor="input"><h2>Iniciar Sesion</h2></label>
                 <div id="input">
                     <label htmlFor="usuario">Usuario</label>
-                    <input id="usuario" type="text" onChange={(e) => setUserName(e.target.value)} value={JSON.parse(localStorage.getItem("sesUser")).usuarioLector}></input>
+                    <input id="usuario" type="text" onChange={(e) => setUserName(e.target.value)} placeholder={JSON.parse(localStorage.getItem("sesUser")).usuarioLector} />
                     <label htmlFor="password">Password</label>
-                    <input id="password" type="password" onChange={(e) => setPassValue(e.target.value)} value={JSON.parse(localStorage.getItem("sesUser")).password}/>
+                    <input id="password" type="password" onChange={(e) => setPassValue(e.target.value)} placeholder={JSON.parse(localStorage.getItem("sesUser")).password}/>
                     <button onClick={checkUser}>Iniciar Sesion</button>
                     <button onClick={()=>{setShowNewUser(!showNewUser)}}>Usuario Nuevo</button>
                     <button onClick={closeSesion}>Cerrar Sesion</button>

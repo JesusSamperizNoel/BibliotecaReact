@@ -1,0 +1,142 @@
+{
+  "usuarios": [
+    {
+      "nombreLector": "Pablo",
+      "apellidosLector": "Barrabes",
+      "usuarioLector": "pbarrabes",
+      "email": "pbarrabes@gmail.com",
+      "password": "Est0esloquehay",
+      "repetirPassword": "Est0esloquehay",
+      "id": 1
+    },
+    {
+      "nombreLector": "jesus",
+      "apellidosLector": "samperiz",
+      "usuarioLector": "jsamperiz",
+      "email": "email",
+      "password": "1234",
+      "repetirPassword": "1234",
+      "id": 2
+    },
+    {
+      "nombreLector": "enrique",
+      "apellidosLector": "casado",
+      "usuarioLector": "ecasado",
+      "email": "email",
+      "password": "1234",
+      "repetirPassword": "1234",
+      "id": 3
+    },
+    {
+      "nombreLector": "Antonio",
+      "apellidosLector": "Monton",
+      "usuarioLector": "amonton",
+      "email": "email@gmail.com",
+      "password": "1234",
+      "repetirPassword": "1234",
+      "id": 4
+    },
+    {
+      "nombreLector": "Jaime",
+      "apellidosLector": "Samperiz",
+      "usuarioLector": "jaimesamperiz",
+      "email": "email@gmail.com",
+      "password": "1234",
+      "repetirPassword": "1234",
+      "id": 5
+    },
+    {
+      "nombreLector": "Martin",
+      "apellidosLector": "Perez",
+      "usuarioLector": "mperez",
+      "email": "email@gmail.com",
+      "password": "1234",
+      "repetirPassword": "1234",
+      "id": 6
+    },
+    {
+      "nombreLector": "Jorge",
+      "apellidosLector": "Martin",
+      "usuarioLector": "jmartin",
+      "email": "email@gmail.com",
+      "password": "1234",
+      "repetirPassword": "1234",
+      "id": 7
+    },
+    {
+      "nombreLector": "Alberto",
+      "apellidosLector": "Perez",
+      "usuarioLector": "aperez",
+      "email": "email@gmail.com",
+      "password": "1234",
+      "repetirPassword": "1234",
+      "id": 8
+    },
+    {
+      "nombreLector": "tomas",
+      "apellidosLector": "t",
+      "usuarioLector": "tt",
+      "email": "email@gmail.com",
+      "password": "1234",
+      "repetirPassword": "1234",
+      "id": 9
+    }
+  ],
+  "libros": [
+    {
+      "id": 1,
+      "titulo": "El informe pelicano",
+      "autor": "Jhon Grisham",
+      "id_prestamo": 0
+    },
+    {
+      "id": 2,
+      "titulo": "La biblia",
+      "autor": "anonimo",
+      "id_prestamo": 0,
+      "fecha_devolucion": ""
+    },
+    {
+      "id": 3,
+      "titulo": "Hubo un jardín",
+      "autor": "Valeria Correa",
+      "id_prestamo": 0,
+      "fecha_devolucion": ""
+    },
+    {
+      "id": 4,
+      "titulo": "Papi",
+      "autor": "Emma Cline",
+      "id_prestamo": 0,
+      "fecha_devolucion": ""
+    },
+    {
+      "id": 5,
+      "titulo": "Un tal Cangrejo",
+      "autor": "Guillermo Aguirre",
+      "id_prestamo": 0,
+      "fecha_devolucion": ""
+    },
+    {
+      "id": 6,
+      "titulo": "Facendera",
+      "autor": "Óscar Garcia",
+      "id_prestamo": 0,
+      "fecha_devolucion": ""
+    },
+    {
+      "id": 7,
+      "titulo": "La familia",
+      "autor": "Sara Mesa",
+      "id_prestamo": 1,
+      "fecha_devolucion": ""
+    },
+    {
+      "titulo": "Mi vida",
+      "autor": "Roberto Escartín",
+      "id_prestamo": 0,
+      "fecha_devolucion": "",
+      "id": 8
+    }
+  ]
+}
