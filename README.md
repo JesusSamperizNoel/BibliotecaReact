@@ -1,2 +1,2 @@
 # BibliotecaReact
-Aplicacion para administrar libros en react
+Aplicacion para administrar usuarios y libros en react
