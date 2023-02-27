@@ -8,11 +8,14 @@ export default function SesionIniciada({userName, setUserName, setPassValue}) {
     
     const URL = "http://localhost:3001"
 
-//terminar el tipo de objeto de las variables de estado
+    const sesUser = JSON.parse(localStorage.getItem('sesUser'))
+
     const [librosDis, setLibrosDis] = useState([])
     const [librosAdq, setLibrosAdq] = useState([])
     const [recargarLibros,setRecargarLibros]=useState(false)
     const [showNewUser, setShowNewUser] = useState(false)
+    const [exp, setExp] = useState("")
+    const [liDisExp , setLiDisExp] = useState([])
 
     function saveLibrosDis() {
         //Petition to Libros disponibles to set librosDis:
@@ -49,7 +52,6 @@ export default function SesionIniciada({userName, setUserName, setPassValue}) {
     }     
 
     async function adqLibro(e) {
-        const sesUser = JSON.parse(localStorage.getItem('sesUser'))
         let idLibro = e.target.parentElement.id
         
         let libro = await fetch(URL+"/libros/"+idLibro).then((response)=>response.json())
@@ -97,6 +99,21 @@ export default function SesionIniciada({userName, setUserName, setPassValue}) {
         .catch(error=>console.error(error))
     }
 
+    function filtrarLibros() {
+        //Petition to Libros with a similar expression:
+        fetch(URL+"/libros?titulo_like="+exp)
+        .then(response => {
+            if(response.ok){
+                return response.json()
+            } else{
+                console.error(response.statusText)
+            }
+        })
+        .then(librosResponse => {
+            setLiDisExp(librosResponse)
+        })
+        .catch(error=>console.error(error))
+    }
 
     useEffect(()=>{
         saveLibrosDis()
@@ -107,12 +124,28 @@ export default function SesionIniciada({userName, setUserName, setPassValue}) {
     return(
         <>
             <div id="libreria">
-                <h2>Bienvenido {userName}</h2>
+                <h2>Bienvenido {sesUser[0].usuarioLector}</h2>
                 <button onClick={()=>{setShowNewUser(!showNewUser)}}>Modificar mi cuenta</button>
                 {showNewUser && <NewUSer setUserName={setUserName} setPassValue={setPassValue}/>}
                 <h4>Libreria</h4>
                 <div id="disponibles">
-                    <label htmlFor="librosDis">Libros disponibles:</label>
+                    <label htmlFor="filter">Buscar libro:</label>
+                    <input id="filter" type="text" onChange={(e) => setExp(e.target.value)}/>
+                    <button onClick={filtrarLibros}>Buscar</button>
+                    <ul id="librosFilter">
+                        {   
+                            liDisExp.map((l) => {
+                                return(
+                                    <li id={l.id} key={l.id}>
+                                        {l.titulo}
+                                        <button onClick={adqLibro}>Adquirir</button>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                    <p></p>
+                    <label htmlFor="librosDisponibles">Libros disponibles:</label>        
                     <ul id="librosDisponibles">
                         {   
                             librosDis.map((l) => {
