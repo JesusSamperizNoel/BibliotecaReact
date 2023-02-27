@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react"
 //Styles:
 import './index.css'
+//Components:
+import NewUSer from "../newUser"
 
-export default function SesionIniciada({userName}) {
+export default function SesionIniciada({userName, setUserName, setPassValue}) {
     
     const URL = "http://localhost:3001"
 
 //terminar el tipo de objeto de las variables de estado
     const [librosDis, setLibrosDis] = useState([])
     const [librosAdq, setLibrosAdq] = useState([])
-    const [recargarLibros,setRecargarLibros]=useState(false);
-
-    function modData() {
-        
-    }
+    const [recargarLibros,setRecargarLibros]=useState(false)
+    const [showNewUser, setShowNewUser] = useState(false)
 
     function saveLibrosDis() {
         //Petition to Libros disponibles to set librosDis:
@@ -54,13 +53,7 @@ export default function SesionIniciada({userName}) {
         let idLibro = e.target.parentElement.id
         
         let libro = await fetch(URL+"/libros/"+idLibro).then((response)=>response.json())
-
-
-       
         libro.id_prestamo = sesUser[0].id
-        console.log(libro);/* 
-        setLibrosAdq(setLibrosAdq(librosAdq.push(libro)))
-        setLibrosDis(setLibrosDis(librosDis.pop(libro))) */
         //PUT libro:
         const options={
             method:"PUT",
@@ -72,7 +65,7 @@ export default function SesionIniciada({userName}) {
         await fetch(URL+"/libros/"+idLibro, options)
         .then(response=>{
             if(response.ok){
-               setRecargarLibros(true); 
+               setRecargarLibros(true)
             }else{
                 console.error(response.statusText)
             }
@@ -80,61 +73,28 @@ export default function SesionIniciada({userName}) {
         .catch(error=>console.error(error))
     }
 
-    function debLibro(e) {
-/*  
-        const idLibro = e.target.parentElement.id
-        const sesUser = JSON.parse(localStorage.getItem('sesUser'))
-        //Get libro
-        fetch(URL+"/libros?id="+sesUser[0].id)
-        .then(response => {
-            if(response.ok){
-                return response.json()
-            } else{
-                console.error(response.statusText)
-            }
-        })
-        .then(libro => {
-            libro.id_prestamo = 0
-            setUpdLibro(libro)
-        })
-        .catch(error=>console.error(error))
-        //Set libro
-        const libroWithoutId = {
-            titulo: updLibro.titulo,
-            autor: updLibro.autor,
-            id_prestamo: sesUser[0].id,
-            fecha_devolucion: updLibro.fecha_devolucion
-        }
+    async function debLibro(e) {
+        let idLibro = e.target.parentElement.id
+
+        let libro = await fetch(URL+"/libros/"+idLibro).then((response)=>response.json())
+        libro.id_prestamo = 0
+        //PUT libro:
         const options={
-            method:"POST",
+            method:"PUT",
             headers:{
                 "Content-type":"application/json"
             },
-            body:JSON.stringify(libroWithoutId)
+            body:JSON.stringify(libro)
         }
-        fetch(URL+"/libros", options)
+        await fetch(URL+"/libros/"+idLibro, options)
         .then(response=>{
             if(response.ok){
-                return response.json()
+            setRecargarLibros(true)
             }else{
                 console.error(response.statusText)
             }
         })
-        .then(libro => {
-            setLibrosAdq(librosAdq.pop(libro))
-            setLibrosDis(librosDis.push(libro))
-        })
         .catch(error=>console.error(error))
-        //Delete libro
-        fetch(URL+"/libros?id="+idLibro,{method:"DELETE"})
-        .then(response => {
-            if(response.ok){
-            } else{
-                console.error(response.statusText)
-            }
-        })
-        .catch(error=>console.error(error))
-*/
     }
 
 
@@ -148,7 +108,8 @@ export default function SesionIniciada({userName}) {
         <>
             <div id="libreria">
                 <h2>Bienvenido {userName}</h2>
-                <button onClick={modData}>Modificar mi cuenta</button>
+                <button onClick={()=>{setShowNewUser(!showNewUser)}}>Modificar mi cuenta</button>
+                {showNewUser && <NewUSer setUserName={setUserName} setPassValue={setPassValue}/>}
                 <h4>Libreria</h4>
                 <div id="disponibles">
                     <label htmlFor="librosDis">Libros disponibles:</label>

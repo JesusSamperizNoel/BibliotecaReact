@@ -9,9 +9,12 @@ export default function IniciarSesion({sesIni, setSesIni}) {
 
     const URL = "http://localhost:3001"
 
+    //Saving id of sesion user from Local Storage:
+    const sesUser = JSON.parse(localStorage.getItem('sesUser'))
+
     //variables de estado:
-    const [userName, setUserName] = useState("")
-    const [passValue, setPassValue] = useState("")
+    const [userName, setUserName] = useState(sesUser[0].usuarioLector)
+    const [passValue, setPassValue] = useState(sesUser[0].password)
     const [showNewUser, setShowNewUser] = useState(false)
         
     function checkUser () {
@@ -51,16 +54,16 @@ export default function IniciarSesion({sesIni, setSesIni}) {
                 <label htmlFor="input"><h2>Iniciar Sesion</h2></label>
                 <div id="input">
                     <label htmlFor="usuario">Usuario</label>
-                    <input id="usuario" type="text" onChange={(e) => setUserName(e.target.value)} placeholder={JSON.parse(localStorage.getItem("sesUser")).usuarioLector} />
+                    <input id="usuario" type="text" onChange={(e) => setUserName(e.target.value)} value={userName} />
                     <label htmlFor="password">Password</label>
-                    <input id="password" type="password" onChange={(e) => setPassValue(e.target.value)} placeholder={JSON.parse(localStorage.getItem("sesUser")).password}/>
+                    <input id="password" type="password" onChange={(e) => setPassValue(e.target.value)} value={passValue}/>
                     <button onClick={checkUser}>Iniciar Sesion</button>
                     <button onClick={()=>{setShowNewUser(!showNewUser)}}>Usuario Nuevo</button>
                     <button onClick={closeSesion}>Cerrar Sesion</button>
                 </div>
             </div>
             {showNewUser && <NewUSer setUserName={setUserName} setPassValue={setPassValue}/>}
-            {sesIni && <SesionIniciada userName={userName}/>}
+            {sesIni && <SesionIniciada userName={userName} setUserName={setUserName} setPassValue={setPassValue}/>}
         </>
     )
 }

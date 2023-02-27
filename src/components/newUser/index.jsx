@@ -2,7 +2,7 @@ import { useState } from "react"
 //Styles:
 import './index.css'
 
-export default function NewUSer({setUserName, setPassValue}) {
+export default function NewUSer(setUserName, setPassValue) {
     
     const URL = "http://localhost:3001"
 
@@ -16,6 +16,8 @@ export default function NewUSer({setUserName, setPassValue}) {
     const [id, setId] = useState("")
     
     function regUser() {
+        //Saving id of sesion user from Local Storage:
+        const sesUser = JSON.parse(localStorage.getItem('sesUser'))
         //check passwords:
         if(password !== repetirPassword){
             document.getElementById("repPassword").setCustomValidity("Las contraseñas no coinciden");
@@ -31,6 +33,13 @@ export default function NewUSer({setUserName, setPassValue}) {
             }
         })
         .then(users => {
+            users.forEach(user => {
+                if (user.usuarioLector === sesUser[0].usuarioLector && user.password === sesUser[0].password) {
+                    fetch(URL+"/usuarios/" + user.id, {
+                        method: 'DELETE',
+                    })
+                }
+            })
             setId(users.length+1) //set id of newUser value
         })
 
@@ -65,6 +74,7 @@ export default function NewUSer({setUserName, setPassValue}) {
                 //Save sesion user in Local Storage:
                 localStorage.removeItem('sesUser')
                 localStorage.setItem('sesUser', JSON.stringify(newUser))
+                alert("Su cuenta ha sido actualizada en la aplicacion, por favor inicie sesion")
             } else{
                 console.error(response.statusText)
             }
@@ -89,7 +99,7 @@ export default function NewUSer({setUserName, setPassValue}) {
                     <input id="password" type="password" onChange={(e) => {setPassword(e.target.value)}} required/>
                     <label htmlFor="repPassword">Repetir contraseña:</label>
                     <input id="repPassword" type="password" onChange={(e) => {setRepPassword(e.target.value)}} required/>
-                    <button onClick={regUser}>Registrarme</button>
+                    <button onClick={regUser}>Registrar datos</button>
                 </div>
             </div>
         </>
