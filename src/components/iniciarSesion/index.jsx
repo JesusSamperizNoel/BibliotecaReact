@@ -1,5 +1,5 @@
 //Things of react:
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NewUSer from '../newUser'
 import SesionIniciada from '../sesionIniciada'
 //Styles:
@@ -9,14 +9,24 @@ export default function IniciarSesion({sesIni, setSesIni}) {
 
     const URL = "http://localhost:3001"
 
-    //Saving id of sesion user from Local Storage:
-    const sesUser = JSON.parse(localStorage.getItem('sesUser'))
-
     //variables de estado:
-    const [userName, setUserName] = useState(sesUser[0].usuarioLector)
-    const [passValue, setPassValue] = useState(sesUser[0].password)
+    const [userName, setUserName] = useState("")
+    const [passValue, setPassValue] = useState("")
     const [showNewUser, setShowNewUser] = useState(false)
-        
+
+    //Saving id of sesion user from Local Storage:
+    useEffect(() => {
+        try {
+            const sesUser = JSON.parse(localStorage.getItem('sesUser'))
+            if (sesUser[0].usuarioLector && sesUser[0].password) {
+                setUserName(sesUser[0].usuarioLector)
+                setPassValue(sesUser[0].password)
+            }
+        } catch (error) {
+            console.log("No usuario logeado previamente")
+        } 
+    },[])    
+
     function checkUser () {
         //Petitions:
         fetch(URL+"/usuarios?usuarioLector="+userName)
@@ -46,6 +56,7 @@ export default function IniciarSesion({sesIni, setSesIni}) {
         setPassValue("")
         document.getElementById("usuario").value = ""
         document.getElementById("password").value = ""
+        localStorage.removeItem('sesUser')
     }
 
     return(
